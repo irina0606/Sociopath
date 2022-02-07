@@ -1,0 +1,36 @@
+{
+  "name": "Sociopath_IK",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "mac_test": "npm run mac_clean && wdio wdio.conf.js && npm run mac_report",
+    "mac_report": "allure generate --clean",
+    "mac_clean": "rm -rf allure-results && rm -rf allure-report",
+    "win_test": "npx wdio wdio.conf.js",
+    "win_report": "allure generate --clean",
+    "win_clean": "rd allure-results /s/q && rd allure-report /s/q"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irina0606/HerokuApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irina0606/HerokuApp/issues"
+  },
+  "homepage": "https://github.com/irina0606/HerokuApp#readme",
+  "devDependencies": {
+    "@wdio/allure-reporter": "^7.16.14",
+    "@wdio/cli": "^7.16.14",
+    "@wdio/devtools-service": "^7.16.14",
+    "@wdio/local-runner": "^7.16.14",
+    "@wdio/mocha-framework": "^7.16.14",
+    "@wdio/spec-reporter": "^7.16.14",
+    "chai": "^4.3.6",
+    "chromedriver": "^97.0.4",
+    "wdio-chromedriver-service": "^7.2.6"
+  }
+}
