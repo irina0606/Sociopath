@@ -5,6 +5,7 @@ const ProfilePage = require('../pageobjects/Profile.page');
 const GlobalNavigation = require("../pageobjects/GlobalNavigation.page");
 const ProfileEditPage = require("../pageobjects/ProfileEdit.page");
 const LoginData = require('../data/login.data');
+const { compareElementsOfArrays } = require('../helpers/uiMethods');
 const firstNameString = "Mary";
 const lastNameString = "Star";
 const jobTitleString = "QA Lead";
@@ -23,17 +24,17 @@ describe("Profile edit page", async () => {
         await ProfilePage.editBtn.click();
     });
 
-    it('should contain label about', async () => {
+    it('TC#1: Should contain label about', async () => {
         const aboutLabel = await ProfileEditPage.labelAbout.getText();
         await chaiExpect(aboutLabel).to.equal("About");
     });
 
-    it('should contain label about - negative', async () => {
+    it('TC#2: Should contain label about - negative', async () => {
         const aboutLabel = await ProfileEditPage.labelAbout.getText();
         await chaiExpect(aboutLabel).not.to.equal("About@");
     });
 
-    it('should be able click Cancel button, be redirected to profile page and back to edit', async () => {
+    it('TC#3: Should be able click Cancel button, be redirected to profile page and back to edit', async () => {
         await expect(ProfileEditPage.btnCancel).toBeClickable();
         await ProfileEditPage.btnCancel.click();
         const titleText = await ProfilePage.title.getText();
@@ -43,7 +44,7 @@ describe("Profile edit page", async () => {
         await chaiExpect(url).to.include('/edit');
     });
 
-    it("Should be able to clean the form", async () => {
+    it("TC#4: Should be able to clean the form", async () => {
         await ProfileEditPage.cleanForm();
         const firstNameField = await ProfileEditPage.inputFirstName.getValue();
         await chaiExpect(firstNameField.length).to.equal(0);
@@ -60,28 +61,28 @@ describe("Profile edit page", async () => {
 
     });
 
-    it("Should be able to count languages in the dropdown and return all names", async () => {
+    it("TC#5: Should be able to count languages in the dropdown and return all names", async () => {
         const length = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages)).length;
         const names = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages));
         await expect(length).toEqual(18);
-        await chaiExpect(names).to.deep.equal(langListDropdown);
+        await expect(await compareElementsOfArrays(names, langListDropdown)).toEqual(true);
     });
 
-    it("Should be able to sort languages in the dropdown and check if they are in asc order", async () => {
+    it("TC#6: Should be able to sort languages in the dropdown and check if they are in asc order", async () => {
         const names = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages)).toString();
         const namesAsc = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages)).sort().toString();
         await expect(names === namesAsc);
     });
 
-    it("Should be able to select and count selected languages in the languages field", async () => {
+    it("TC#7: Should be able to select and count selected languages in the languages field", async () => {
         await ProfileEditPage.selectAllLanguages();
         const length= (await ProfileEditPage.getLang(ProfileEditPage.selectedLangs)).length;
-        const names = (await ProfileEditPage.getLang(ProfileEditPage.selectedLangs)).toString();
+        const names = (await ProfileEditPage.getLang(ProfileEditPage.selectedLangs));
         await expect(length).toEqual(18);
-        await chaiExpect(names.toString()).to.deep.equal(langListInput.toString());
+        await expect(await compareElementsOfArrays(names, langListInput)).toEqual(true);
     });
 
-    it("Should compare Languages after selection", async () => {
+    it("TC#8: Should compare Languages after selection", async () => {
         const length1 = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages)).length;
         const names1 = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages)).toString();
         const length2= (await ProfileEditPage.getLang(ProfileEditPage.selectedLangs)).length;
@@ -89,21 +90,21 @@ describe("Profile edit page", async () => {
         await expect(length1).not.toEqual(length2);
     });
 
-    it('should verify empty Dropdown', async () => {
+    it('TC#9: Should verify empty Dropdown', async () => {
         await ProfileEditPage.langInputField.click();
         const names = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages));
         await chaiExpect(names).to.deep.equal([]);
         await expect(ProfileEditPage.emptyDropdown).toHaveText("No options");
     });
 
-    it("Should be able to fill the form and check the field first name", async () => {
+    it("TC#10: Should be able to fill the form and check the field first name", async () => {
         await ProfileEditPage.fillForm(firstNameString, lastNameString, jobTitleString, imageLinkString, aboutString);
         const getFirstName = await ProfileEditPage.inputFirstName;
         expect(getFirstName.inputFirstName).toHaveText(firstNameString);
         await chaiExpect(getFirstName).to.not.be.empty;
     });
 
-    it ('should be able to remove all languages and select one lang', async () => {
+    it ('TC#11: Should be able to remove all languages and select one lang', async () => {
         await ProfileEditPage.langDropdownBtn.click();
         await ProfileEditPage.cleanLang.click();
         const oneLang = await ProfileEditPage.dropdownLanguages[5].getText();
@@ -112,10 +113,11 @@ describe("Profile edit page", async () => {
         await expect(ProfileEditPage.selectedLangs[0]).toHaveText("Go");
     });
 
-    it("Should be able to  save", async () => {
+    it("TC#12: Should be able to  save", async () => {
         await ProfileEditPage.btnSave.click();
         const titleText = await ProfilePage.title.getText();
         expect(titleText).toEqual("user");
         expect(ProfilePage.aboutInfo).toHaveTextContaining(aboutString);
     });
 });
+

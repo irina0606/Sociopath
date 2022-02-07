@@ -39,11 +39,16 @@ async function returnBooleanArrayIsASCOrder(selectorToGetElements){
     return (arrOfElements.toString() === arrSorted.toString());
 }
 
+async function compareElementsOfArrays(array1, array2) {
+    return array1.every(element => { return array2.includes(element)});
+}
+
 module.exports = {
     clearInput,
     getInitials,
     getElements,
     returnBooleanArrayIsASCOrder,
     enter,
-    setTime
+    setTime,
+    compareElementsOfArrays,
 }
