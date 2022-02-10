@@ -32,15 +32,11 @@ describe('end-2-end',  () =>{
     // });
 
     it('should login user_1 and get user ID', async () => {
-        const accessToken = await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1);
-        const userID = await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1);
-        const userEmail = await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1);
-        console.log(accessToken);
-        console.log(userID);
-        console.log(userEmail);
-        expect(!!accessToken.token).toBe(true);
-        expect(!!userID.userID).toBe(true);
-        expect(userEmail.email).toHaveTextContaining("White")
+        const userTokenAndData= await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1);
+        console.log(userTokenAndData);
+        expect(!!userTokenAndData.token).toBe(true);
+        expect(!!userTokenAndData.userID).toBe(true);
+        expect(userTokenAndData.email).toHaveTextContaining("White")
 
     });
 

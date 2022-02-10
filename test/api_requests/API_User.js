@@ -76,7 +76,7 @@ async function login_getUserTokenAndData (email, password) {
     });
 
     if (data.errors) {
-        return { errors: data.data.errors.message};
+        return { errors: data.errors };
     } else {
         const token = data.data.login.accessToken;
         const userID = data.data.login.user._id;
