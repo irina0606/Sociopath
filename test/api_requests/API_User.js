@@ -52,40 +52,41 @@ async function activateUser_verification (activationLinkID) {
     }
 }
 
-// async function login_getUserTokenAndData (email, pasword) {
-//     const reqData = JSON.stringify({
-//         query: `query login ($email: String!, $password: String!) {
-//     login (email: $email, password: $password) {
-//         accessToken
-//         user {
-//             _id
-//             email
-//             firstName
-//             lastName
-//         }
-//     }
-// }`,
-//         variables: {"email":email, "password":pasword}
-//     });
-//
-//     const config = await axios ({
-//         method: 'post',
-//         url: endpoint,
-//         data : reqData;
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//     });
-//
-//     if (config.data.errors) {
-//         return { errors: config.data.errors};
-//     } else {
-//         const token = config.data.userActivate;
-//         return  { message };
-//     }
-// }
+async function login_getUserTokenAndData (email, password) {
+    const reqData = JSON.stringify({
+        query: `query login ($email: String!, $password: String!) {
+    login (email: $email, password: $password) {
+        accessToken
+        user {
+            _id
+            email
+        }
+    }
+}`,
+        variables: {"email":email, "password":password}
+    });
+
+    const { data } = await axios ({
+        method: 'post',
+        url: endpoint,
+        data : reqData,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    if (data.errors) {
+        return { errors: data.data.errors.message};
+    } else {
+        const token = data.data.login.accessToken;
+        const userID = data.data.login.user._id;
+        const email = data.data.login.user.email;
+        return  { token, userID, email };
+    }
+}
 
 module.exports = {
     createUser_getActivationLinkID,
     activateUser_verification,
+    login_getUserTokenAndData,
 }

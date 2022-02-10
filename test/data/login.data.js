@@ -8,7 +8,7 @@ module.exports = {
     },
 
     apiCredentials: {
-        email1: "White999@test.com",
+        email1: "White@test.com",
         pw1: "PW_test@123",
 
         email2: "Black@test.com",
