@@ -85,7 +85,7 @@ async function login_getUserTokenAndData (email, password) {
     }
 }
 
-async function deleteByAdmin (accessToken, userId) {
+async function deleteUser (accessToken, userId) {
     const reqData = JSON.stringify({
         query: `mutation userDelete ($userId: ID!) {
     userDelete (userId: $userId)
@@ -113,5 +113,5 @@ module.exports = {
     createUser_getActivationLinkID,
     activateUser_verification,
     login_getUserTokenAndData,
-    deleteByAdmin,
+    deleteUser,
 }
