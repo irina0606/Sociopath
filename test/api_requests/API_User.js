@@ -85,8 +85,33 @@ async function login_getUserTokenAndData (email, password) {
     }
 }
 
+async function deleteByAdmin (accessToken, userId) {
+    const reqData = JSON.stringify({
+        query: `mutation userDelete ($userId: ID!) {
+    userDelete (userId: $userId)
+}`,
+        variables: {"userId": userId}
+    });
+
+    const {data} = await axios({
+        method: 'post',
+        url: endpoint,
+        data: reqData,
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+    });
+    if (data.errors) {
+        return {errors: data.errors};
+    } else {
+        const notification = data.data.userDelete;
+        return {notification};
+    }
+}
 module.exports = {
     createUser_getActivationLinkID,
     activateUser_verification,
     login_getUserTokenAndData,
+    deleteByAdmin,
 }
