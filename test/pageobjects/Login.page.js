@@ -34,9 +34,9 @@ class LoginPage extends Page {
         return $("//a[@href='/signup']");
     }
 
-    async login(useremail, password) {
+    async login(userEmail, password) {
         await this.open();
-        await this.inputEmail.setValue(useremail);
+        await this.inputEmail.setValue(userEmail);
         await this.inputPassword.setValue(password);
         await this.btnLogin.click();
     }

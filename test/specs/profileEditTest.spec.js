@@ -1,10 +1,10 @@
 const { expect: chaiExpect, assert } = require("chai");
+const {userCredentials} = require("../data/login.data");
 
 const LoginPage = require('../pageobjects/Login.page');
 const ProfilePage = require('../pageobjects/Profile.page');
 const GlobalNavigation = require("../pageobjects/GlobalNavigation.page");
 const ProfileEditPage = require("../pageobjects/ProfileEdit.page");
-const LoginData = require('../data/login.data');
 const { compareElementsOfArrays } = require('../helpers/uiMethods');
 const firstNameString = "Mary";
 const lastNameString = "Star";
@@ -17,8 +17,7 @@ const langListInput = [".NET", "C", "C++", "C#", "Go", "Dart", "JavaScript", "Ja
 describe("Profile edit page", async () => {
 
     before(async () => {
-        await browser.maximizeWindow();
-        await LoginPage.login(LoginData.userCredentials.email, LoginData.userCredentials.password);
+        await LoginPage.login(userCredentials.email, userCredentials.password);
         await GlobalNavigation.btnMenu.click();
         await GlobalNavigation.profileOption.click();
         await ProfilePage.editBtn.click();
