@@ -16,7 +16,7 @@ describe('end-2-end',  () =>{
     let about = "Always ready for new opportunities";
     let image = "https://media.istockphoto.com/photos/flower-rose-petal-blossom-red-nature-beautiful-background-picture-id1091007944?k=20&m=1091007944&s=612x612&w=0&h=1qxztvVpzVbWgrgM9zhBS20_GJeO8iRuFhgz5ygpHXU=";
     let job = "Manager";
-    let arrLang = ["Java", "JavaScript"];
+    let arrLang = ["Java", "JavaScript", "C++"];
 
 
     // it('should create user_1 and get activation link ID', async () => {
@@ -54,7 +54,7 @@ describe('end-2-end',  () =>{
 
     it('should update user_1 and get verification message', async () => {
        const bearerTokenAndUserID = (await login_getUserTokenAndData(apiCredentials.email2, apiCredentials.pw2));
-       const newData = await updateUser(bearerTokenAndUserID.token, bearerTokenAndUserID.userID, {values: firstName, lastName, about, image,job,arrLang});
+       const newData = await updateUser(bearerTokenAndUserID.token, bearerTokenAndUserID.userID, {values: {firstName, lastName, about, image,job,arrLang}});
        console.log(newData);
 
     });

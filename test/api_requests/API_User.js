@@ -100,7 +100,7 @@ async function updateUser (accessToken,userId, {values: { firstName, lastName, a
         languages
     }
 }`,
-        variables: {"userId":userId,"values":{"firstName":firstName,"lastName":lastName, "about": about, "image":image,"jobTitle":job,"languages": [arrLang]}}
+        variables: {"userId":userId,"values":{"firstName":firstName,"lastName":lastName, "about": about, "image":image,"jobTitle":job,"languages": arrLang}}
     });
 
     const {data} = await axios ({
