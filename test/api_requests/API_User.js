@@ -85,6 +85,41 @@ async function login_getUserTokenAndData (email, password) {
     }
 }
 
+async function updateUser (accessToken,userId, {values: { firstName, lastName, about, image, job, arrLang}}) {
+    const reqData = JSON.stringify({
+        query: `mutation userUpdate ($userId: ID!, $values: UserInput) {
+    userUpdate (userId: $userId, values: $values) {
+        _id
+        email
+        firstName
+        lastName
+        about
+        image
+        jobTitle
+        level
+        languages
+    }
+}`,
+        variables: {"userId":userId,"values":{"firstName":firstName,"lastName":lastName, "about": about, "image":image,"jobTitle":job,"languages": [arrLang]}}
+    });
+
+    const {data} = await axios ({
+        method: 'post',
+        url: endpoint,
+        data : reqData,
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+    });
+    if (data.errors) {
+        return {errors: data.errors};
+    } else {
+        const notification = data.data.userUpdate;
+        return {notification};
+    }
+}
+
 async function deleteUser (accessToken, userId) {
     const reqData = JSON.stringify({
         query: `mutation userDelete ($userId: ID!) {
@@ -109,9 +144,11 @@ async function deleteUser (accessToken, userId) {
         return {notification};
     }
 }
+
 module.exports = {
     createUser_getActivationLinkID,
     activateUser_verification,
     login_getUserTokenAndData,
     deleteUser,
+    updateUser,
 }
