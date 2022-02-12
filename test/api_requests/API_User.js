@@ -120,6 +120,31 @@ async function updateUser (accessToken,userId, {values: { firstName, lastName, a
     }
 }
 
+async function passwordResetRequest (accessToken, email) {
+    const reqData = JSON.stringify({
+        query: `mutation userPasswordResetRequest ($email: String!) {
+    userPasswordResetRequest (email: $email)
+}`,
+        variables: {"email": email}
+    });
+
+    const {data} = await axios({
+        method: 'post',
+        url: endpoint,
+        data: reqData,
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+    });
+    if (data.errors) {
+        return {errors: data.errors};
+    } else {
+        const notification = data.data.userPasswordResetRequest;
+        return {notification};
+    }
+}
+
 async function deleteUser (accessToken, userId) {
     const reqData = JSON.stringify({
         query: `mutation userDelete ($userId: ID!) {
@@ -151,4 +176,5 @@ module.exports = {
     login_getUserTokenAndData,
     deleteUser,
     updateUser,
+    passwordResetRequest,
 }
