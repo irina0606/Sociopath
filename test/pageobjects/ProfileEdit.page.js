@@ -101,6 +101,10 @@ class ProfileEditPage extends Page {
         return langList;
     }
 
+    async getSpecificLangs (list, text) {
+        return list.filter(lang => lang.includes(`${text}`));
+    }
+
     open() {
         return super.open('/edit');
     }
