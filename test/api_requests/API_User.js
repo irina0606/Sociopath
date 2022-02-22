@@ -120,6 +120,80 @@ async function updateUser (accessToken,userId, {values: { firstName, lastName, a
     }
 }
 
+async function getUser (accessToken, userId) {
+    const reqData = JSON.stringify({
+        query: `query user ($userId: ID!) {
+    user (userId: $userId) {
+        _id
+        email
+        firstName
+        lastName
+        about
+        image
+        jobTitle
+        languages
+        level
+    }
+}`,
+        variables: {"userId": userId}
+    });
+    const {data} = await axios ({
+        method: 'post',
+        url: endpoint,
+        data : reqData,
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+    });
+    if (data.errors) {
+        return {errors: data.errors};
+    } else {
+        const userData = data.data.user;
+        return {userData};
+    }
+}
+
+async function getUsers (accessToken, offset, limit) {
+    const reqData = JSON.stringify({
+        query: `query users ($offset: Int, $limit: Int) {
+    users (offset: $offset, limit: $limit) {
+        list {
+            _id
+            email
+            firstName
+            lastName
+            about
+            image
+            jobTitle
+            level
+            languages
+            roles
+        }
+    }
+}`,
+        variables: {"offset":offset,"limit":limit}
+    });
+
+    const test = await axios ({
+        method: 'post',
+        url: endpoint,
+        data: reqData,
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+    });
+    if (test.data.errors) {
+        const error = test.data.errors
+        return error;
+    } else {
+        const usersData = test.data.data.users.list;
+        return {usersData};
+    }
+}
+
+
 async function passwordResetRequest (accessToken, email) {
     const reqData = JSON.stringify({
         query: `mutation userPasswordResetRequest ($email: String!) {
@@ -170,6 +244,10 @@ async function deleteUser (accessToken, userId) {
     }
 }
 
+// async function passwordReset (accessToken, email) {
+//
+// }
+
 module.exports = {
     createUser_getActivationLinkID,
     activateUser_verification,
@@ -177,4 +255,8 @@ module.exports = {
     deleteUser,
     updateUser,
     passwordResetRequest,
+    getUser,
+    getUsers,
 }
+
+

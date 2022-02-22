@@ -34,6 +34,10 @@ class LoginPage extends Page {
         return $("//a[@href='/signup']");
     }
 
+    get popupAlert() {
+        return $("//div[@class='MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 m-auto login-form p-4 css-aoeo82']//form");
+    }
+
     async login(userEmail, password) {
         await this.open();
         await this.inputEmail.setValue(userEmail);
