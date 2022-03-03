@@ -1,5 +1,5 @@
 const {expect: chaiExpect, assert} = require("chai");
-const {apiCredentials, resetPW} = require("../data/login.data");
+const {apiCredentials, resetPW, userCredentials} = require("../data/login.data");
 const {
     createUser_getActivationLinkID,
     activateUser_verification,
@@ -9,6 +9,7 @@ const {
     passwordResetRequest,
     getUser,
     getUsers,
+    userLogout,
 } = require("../api_requests/API_User");
 const loginData = require("../data/login.data");
 
@@ -38,26 +39,35 @@ describe('end-2-end', () => {
     //     console.log(verification.message + "            ++++++++++++++++++++++++++++++++++++++++++++++++++++");
     //     expect(verification.message).toEqual("Activation Successful!");
     // });
-    //
+
     // it('should create user_2 and get activation link ID', async () => {
     //     activationLink2 = await createUser_getActivationLinkID(apiCredentials.email2, apiCredentials.pw2);
     //     console.log(activationLink2.activationLinkId + "            ++++++++++++++++++++++++++++++++++++++++++++++++++++");
     //     expect(!!activationLink2.activationLinkId).toBe(true);
     // });
     //
-    // it('should register User_2 and get get verification message', async () => {
+    // it('should register User_2 and get verification message', async () => {
     //     const verification = await activateUser_verification(activationLink2.activationLinkId);
     //     console.log(verification.message + "            ++++++++++++++++++++++++++++++++++++++++++++++++++++");
     //     expect(verification.message).toEqual("Activation Successful!");
     // });
 
+    // it('should login user_1 and get user ID', async () => {
+    //     accessToken = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).token;
+    //     userID = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).userID;
+    //     email = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).email;
+    //     expect(!!accessToken).toBe(true);
+    //     expect(!!userID).toBe(true);
+    //     expect(email).toHaveTextContaining("White");
+    // });
+
     it('should login user_1 and get user ID', async () => {
-        accessToken = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).token;
-        userID = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).userID;
-        email = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).email;
+        accessToken = (await login_getUserTokenAndData(userCredentials.email, userCredentials.pw)).token;
+        userID = (await login_getUserTokenAndData(userCredentials.email, userCredentials.pw)).userID;
+        email = (await login_getUserTokenAndData(userCredentials.email, userCredentials.pw)).email;
         expect(!!accessToken).toBe(true);
         expect(!!userID).toBe(true);
-        expect(email).toHaveTextContaining("White");
+        expect(email).toHaveTextContaining("Manya");
     });
 
     it('should update user_1 and get verification message', async () => {
@@ -123,11 +133,15 @@ describe('end-2-end', () => {
         console.log(count);
     });
 
-
+    it('should logout and go back to login page', async () => {
+        const logOut = await userLogout(accessToken);
+        expect (logOut.backToLogin).toBe(true);
+        //expect (browser).toHaveUrl("https://enduring.netlify.app/login");
+    });
+    //
     // it('should delete any user by the admin', async () => {
     //     const adminToken = (await login_getUserTokenAndData(loginData.adminCredentials.email, loginData.adminCredentials.password)).token;
-    //     const userId = (await login_getUserTokenAndData(apiCredentials.email1, apiCredentials.pw1)).userID;
-    //     const verification = await deleteUser(adminToken, userId);
+    //     const verification = await deleteUser(adminToken, userID);
     //     console.log(verification.notification);
     //     await expect(verification.notification).toEqual("User Deleted");
     // });

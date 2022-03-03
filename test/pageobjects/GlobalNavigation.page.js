@@ -3,7 +3,7 @@ const Page = require ('./Page');
 class GlobalNavigationPage extends Page {
 
     get btnMenu() {
-        return $("#nav-bar-toggle");
+        return $("//button[@id='nav-bar-toggle']");
     }
 
     get publicationsOption(){

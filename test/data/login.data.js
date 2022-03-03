@@ -1,14 +1,14 @@
 module.exports = {
     userCredentials: {
         email: "Manya111@test.com",
-        password: "Manya111@",
+        pw: "Manya111@",
 
         wrongEmail: "vitalii__gmail  hello",
         wrongPassword: "AaBaVv11 52 00**"
     },
 
     apiCredentials: {
-        email1: "White@test.com",
+        email1: "WhiteWhite@test.com",
         pw1: "PW_test@123",
 
         email2: "Black@test.com",

@@ -17,7 +17,7 @@ const langListInput = [".NET", "C", "C++", "C#", "Go", "Dart", "JavaScript", "Ja
 describe("Profile edit page", async () => {
 
     before(async () => {
-        await LoginPage.login(userCredentials.email, userCredentials.password);
+        await LoginPage.login(userCredentials.email, userCredentials.pw);
         await GlobalNavigation.btnMenu.click();
         await GlobalNavigation.profileOption.click();
         await ProfilePage.editBtn.click();
