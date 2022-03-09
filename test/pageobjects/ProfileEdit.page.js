@@ -43,6 +43,10 @@ class ProfileEditPage extends Page {
         return $$("//ul[@id='languages-listbox']/li");
     }
 
+    get anyLangFromDropdown() {
+        return $("//ul[@id='languages-listbox']/li");
+    }
+
     get selectedLangs() {
         return $$("//span[@class='MuiChip-label MuiChip-labelSmall css-1pjtbja']");
     }
@@ -102,8 +106,12 @@ class ProfileEditPage extends Page {
     }
 
     async getSpecificLangs (list, text) {
-        return list.filter(lang => lang.includes(`${text}`));
+        return list.filter(lang => lang.toLowerCase().includes(`${text}`.toLowerCase()));
     }
+
+    // async getItemContainsSpecificLetter (list, text) {
+    //     return list.filter(lang => lang.includes(`${text}`));
+    // }
 
     open() {
         return super.open('/edit');

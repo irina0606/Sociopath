@@ -67,12 +67,28 @@ describe("Profile edit page", async () => {
         await expect(await compareElementsOfArrays(names, langListDropdown)).toEqual(true);
     });
 
-    it("TC#5: Should be able to count languages in the dropdown and return langs with first letter 'J'", async () => {
-        const letter = "J";
+    it("TC#5: Should be able to return langs with the particular letter 'J'", async () => {
+        const letter = "Je";
         const arr = await ProfileEditPage.getSpecificLangs(langListDropdown, letter);
         console.log("+++++++++++++++" + arr);
-        expect(arr.length).toEqual(2);
+        console.log("+++++++++++++++" + arr.length);
+        expect(arr.length).toEqual(1);
     });
+
+    // it("TC#5: Should be able to type particular letter return langs containing these letters", async () => {
+    //     const letter = "by";
+    //     await ProfileEditPage.langInputField.click();
+    //     await ProfileEditPage.langInputField.setValue(letter);
+    //     const selectedLangs = await ProfileEditPage.dropdownLanguages;
+    //     const arrSelectedLang = await ProfileEditPage.getSpecificLangs( selectedLangs, letter);
+    //     //await ProfileEditPage.getSpecificLangs(letter)
+    //     // console.log("+++++++++++++++" + arrSelectedLang);
+    //     // console.log("+++++++++++++++" + arrSelectedLang);
+    //
+    //     // const arr = await ProfileEditPage.getSpecificLangs(langListDropdown, letter);
+    //     // console.log("+++++++++++++++" + arr);
+    //     // expect(arr.length).toEqual(1);
+    // });
     //
     // it("TC#6: Should be able to sort languages in the dropdown and check if they are in asc order", async () => {
     //     const names = (await ProfileEditPage.getLang(ProfileEditPage.dropdownLanguages)).toString();

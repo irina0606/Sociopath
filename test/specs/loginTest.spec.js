@@ -36,7 +36,7 @@ describe("Login page", () => {
     });
 
     it("TC-5: Verify if user can log in with the valid credentials", async () => {
-        await LoginPage.login(LoginData.userCredentials.email, LoginData.userCredentials.password);
+        await LoginPage.login(LoginData.userCredentials.email, LoginData.userCredentials.pw);
         await expect(PublicationPage.publicationsTitle).toBeExisting();
         await expect(PublicationPage.publicationsTitle).toHaveTextContaining('publications');
     });
