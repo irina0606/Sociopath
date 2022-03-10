@@ -30,7 +30,7 @@
     "@wdio/mocha-framework": "^7.16.14",
     "@wdio/spec-reporter": "^7.16.14",
     "chai": "^4.3.6",
-    "chromedriver": "^97.0.4",
+    "chromedriver": "^99.0.4",
     "wdio-chromedriver-service": "^7.2.6"
   }
 }
