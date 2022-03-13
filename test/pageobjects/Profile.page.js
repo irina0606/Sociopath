@@ -12,7 +12,7 @@ class ProfilePage extends Page {
     }
 
     get editBtn () {
-        return $("//button[contains(text(), 'Edit')]");
+        return $("//body//div//div//div//button[contains(@type,'button')]");
     }
 
     get profileImageInitials () {

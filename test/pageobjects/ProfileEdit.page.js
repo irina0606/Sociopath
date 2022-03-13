@@ -3,6 +3,10 @@ const {clearInput} = require("../../test/helpers/uiMethods");
 
 class ProfileEditPage extends Page {
 
+    get container() {
+        return $("//div[@class='container']");
+    }
+
     get inputFirstName() {
         return $('#first-name');
     }
@@ -74,6 +78,7 @@ class ProfileEditPage extends Page {
         await clearInput(this.inputImageLink);
         await clearInput(this.inputAbout);
         await this.langInputField.click();
+        await this.langInputField.click();
         await this.cleanLang.click();
     }
 
@@ -106,12 +111,8 @@ class ProfileEditPage extends Page {
     }
 
     async getSpecificLangs (list, text) {
-        return list.filter(lang => lang.toLowerCase().includes(`${text}`.toLowerCase()));
+        return list.filter(lang => lang.includes(`${text}`));
     }
-
-    // async getItemContainsSpecificLetter (list, text) {
-    //     return list.filter(lang => lang.includes(`${text}`));
-    // }
 
     open() {
         return super.open('/edit');
