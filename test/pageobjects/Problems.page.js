@@ -59,15 +59,45 @@ class ProblemsPage extends Page {
     }
 
     get columnsTooltip () {
-        return $ (" //div[@role='tooltip']");
+        return $ ("//div[contains(@role,'tooltip')]");
+    }
+    get findColumnField () {
+        return $ ("//input[@placeholder='Column title']");
     }
 
-    get findColumnField () {
-        return $ ("//input[@type='text']");
+    get columnNamesArr() {
+        return $$ ("//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1jaw3da']");
+    }
+
+    get columnsTooltipArr () {
+        return $$ ("//div[@class='MuiDataGrid-columnsPanelRow css-fc3ngs']");
+    }
+    get columnsTooltipEachElem () {
+        return $ ("//span[@class='MuiSwitch-thumb css-19gndve']");
+    }
+
+    get inputFindColumn() {
+        return $ ("//input[@placeholder='Column title']");
     }
 
     get problemNameToggle () {
-        return $ ("//span[normalize-space()='Problem name']");
+        return $ ("//input[@name='Problem name']");
+    }
+
+    get positionToggle () {
+        return $ ("//input[@name='Position']");
+    }
+
+    get companyToggle () {
+        return $ ("//input[@name='Company']");
+    }
+
+    get solutionsToggle () {
+        return $ ("//input[@name='Solutions']");
+    }
+
+    get creatorToggle () {
+        return $ ("//input[@name='Creator']");
     }
 
     get showAllBtn () {
@@ -78,7 +108,21 @@ class ProblemsPage extends Page {
         return $ ("//button[normalize-space()='Hide all']");
     }
 
+    async getColumnNames (list) {
+        const names = [];
+        await list.map(async (elem) => names.push(await elem.getText()));
+        return names;
+    }
 
+    // async toggleColumnNames (list) {
+    //     return list.forEach((elem, index) => (elem.click(index)));
+    // }
+
+    async toggleColumnNames (list) {
+        for (let i = 0; i <= this.columnNamesArr.length; i++) {
+                await this.columnNamesArr[i].click();
+            }
+        }
 
     open (){
         return super.open ("/problems");
