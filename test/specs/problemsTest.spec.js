@@ -23,40 +23,30 @@ describe('Problems Page', async() => {
 
     it ("Should show tooltip wth column names and hide it ", async () => {
         await ProblemsPage.columns.click();
-        expect (ProblemsPage.columnsTooltip).not.toBeDisplayedInViewport();
+        expect (ProblemsPage.columnsTooltip).toBeDisplayedInViewport();
         const columns = await ProblemsPage.getColumnNames (ProblemsPage.columnsTooltipArr);         // ask
         console.log(columns + "+++++++++++++++++++++++++++++++++++++++");
         expect (ProblemsPage.columnsTooltip).not.toHaveValueContaining(columnArray.toString());     //ask
         expect(ProblemsPage.columnsTooltipArr).toExist();
         await ProblemsPage.columns.click();
-        expect(ProblemsPage.columnsTooltipArr).toExist();
-
+        expect(ProblemsPage.columnsTooltipArr).not.toExist();
     });
 
     it ("Should verify the number of columns", async () => {
         await ProblemsPage.columns.click();
-        await ProblemsPage.inputFindColumn.waitForDisplayed();
-        const namesList = await ProblemsPage.columnNamesArr;
-        console.log(namesList.length + "=========================================");
-        //await ProblemsPage.toggleColumnNames(namesList);
+        expect (ProblemsPage.columnsTooltip).toBeDisplayedInViewport();
+        const columns = await ProblemsPage.columnsTooltipArr.length;         // ask
+        console.log(columns + "+++++++++++++++++++++++++++++++++++++++");
+        expect(columns).toEqual(5);
+    });
+
+    it ("Should untoggle and toggle any column", async () => {
+        await ProblemsPage.toggleColumnNames(ProblemsPage.columnsTooltipArr);
         //console.log(JSON.stringify(untoggle) + "+++++++++++++++++++++++++++++++++++++++");
         // expect(untoggle).toBeDisplayedInViewport();
         // await ProblemsPage.problemNameToggle.click();
         // console.log(JSON.stringify(untoggle) + "+++++++++++++++++++++++++++++++++++++++");
-    });
 
-    // it ("Should untoggle and toggle any column", async () => {
-    //     await ProblemsPage.columns.click();
-    //     await ProblemsPage.columnsTooltip.click();
-    //     //await browser.pause(3000);
-    //     const namesList = await ProblemsPage.columnNamesArr;
-    //     console.log(namesList.length + "=========================================");
-    //     await ProblemsPage.toggleColumnNames(namesList);
-    //     //console.log(JSON.stringify(untoggle) + "+++++++++++++++++++++++++++++++++++++++");
-    //     // expect(untoggle).toBeDisplayedInViewport();
-    //     // await ProblemsPage.problemNameToggle.click();
-    //     // console.log(JSON.stringify(untoggle) + "+++++++++++++++++++++++++++++++++++++++");
-    //
-    // })
+    })
 });
 

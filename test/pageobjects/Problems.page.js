@@ -61,9 +61,6 @@ class ProblemsPage extends Page {
     get columnsTooltip () {
         return $ ("//div[contains(@role,'tooltip')]");
     }
-    get findColumnField () {
-        return $ ("//input[@placeholder='Column title']");
-    }
 
     get columnNamesArr() {
         return $$ ("//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1jaw3da']");
@@ -78,6 +75,10 @@ class ProblemsPage extends Page {
 
     get inputFindColumn() {
         return $ ("//input[@placeholder='Column title']");
+    }
+
+    get footer() {
+        return $ ("/html/body/div[2]/div/div[2]/div[3]");
     }
 
     get problemNameToggle () {
@@ -119,9 +120,12 @@ class ProblemsPage extends Page {
     // }
 
     async toggleColumnNames (list) {
+        const names = [];
         for (let i = 0; i <= this.columnNamesArr.length; i++) {
                 await this.columnNamesArr[i].click();
+                await browser.pause(1000)
             }
+        return names;
         }
 
     open (){
