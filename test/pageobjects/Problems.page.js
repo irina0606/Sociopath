@@ -63,12 +63,12 @@ class ProblemsPage extends Page {
     }
 
     get columnNamesArr() {
-        return $$ ("//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1jaw3da']");
+        return $$ ("//input[@class='MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3']");
     }
 
-    get columnsTooltipArr () {
-        return $$ ("//div[@class='MuiDataGrid-columnsPanelRow css-fc3ngs']");
-    }
+    // get columnsTooltipArr () {
+    //     return $$ ("//div[@class='MuiDataGrid-columnsPanelRow css-fc3ngs']");
+    // }
     get columnsTooltipEachElem () {
         return $ ("//span[@class='MuiSwitch-thumb css-19gndve']");
     }
@@ -120,12 +120,9 @@ class ProblemsPage extends Page {
     // }
 
     async toggleColumnNames (list) {
-        const names = [];
-        for (let i = 0; i <= this.columnNamesArr.length; i++) {
-                await this.columnNamesArr[i].click();
-                await browser.pause(1000)
+        for (let i = 0; i < list.length; i++) {
+            await list[i].click();
             }
-        return names;
         }
 
     open (){

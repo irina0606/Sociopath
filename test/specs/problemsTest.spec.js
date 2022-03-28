@@ -14,6 +14,7 @@ describe('Problems Page', async() => {
         await LoginPage.login(userCredentials.email, userCredentials.pw);
         await GlobalNavigation.btnMenu.click();
         await GlobalNavigation.problemsOption.click();
+        await ProblemsPage.columns.click();
     })
 
     it('Should open Problems Page ', async () => {
@@ -24,29 +25,26 @@ describe('Problems Page', async() => {
     it ("Should show tooltip wth column names and hide it ", async () => {
         await ProblemsPage.columns.click();
         expect (ProblemsPage.columnsTooltip).toBeDisplayedInViewport();
-        const columns = await ProblemsPage.getColumnNames (ProblemsPage.columnsTooltipArr);         // ask
+        const columns = await ProblemsPage.getColumnNames (await ProblemsPage.columnNamesArr);         // ask
         console.log(columns + "+++++++++++++++++++++++++++++++++++++++");
         expect (ProblemsPage.columnsTooltip).not.toHaveValueContaining(columnArray.toString());     //ask
-        expect(ProblemsPage.columnsTooltipArr).toExist();
+        expect(ProblemsPage.columnNamesArr).toExist();
         await ProblemsPage.columns.click();
-        expect(ProblemsPage.columnsTooltipArr).not.toExist();
+        expect(ProblemsPage.columnNamesArr).not.toExist();
     });
 
     it ("Should verify the number of columns", async () => {
         await ProblemsPage.columns.click();
         expect (ProblemsPage.columnsTooltip).toBeDisplayedInViewport();
-        const columns = await ProblemsPage.columnsTooltipArr.length;         // ask
+        const columns = await ProblemsPage.columnNamesArr.length;         // ask
         console.log(columns + "+++++++++++++++++++++++++++++++++++++++");
         expect(columns).toEqual(5);
     });
 
-    it ("Should untoggle and toggle any column", async () => {
-        await ProblemsPage.toggleColumnNames(ProblemsPage.columnsTooltipArr);
-        //console.log(JSON.stringify(untoggle) + "+++++++++++++++++++++++++++++++++++++++");
-        // expect(untoggle).toBeDisplayedInViewport();
-        // await ProblemsPage.problemNameToggle.click();
-        // console.log(JSON.stringify(untoggle) + "+++++++++++++++++++++++++++++++++++++++");
-
-    })
+    // it ("Should untoggle and toggle any column", async () => {
+    //     await ProblemsPage.toggleColumnNames(await ProblemsPage.columnNamesArr);
+    //     expect()
+    //     await ProblemsPage.toggleColumnNames(await ProblemsPage.columnNamesArr);
+    // })
 });
 
